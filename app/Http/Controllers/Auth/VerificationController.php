@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace atividade_vitor_final\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use atividade_vitor_final\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 
 class VerificationController extends Controller

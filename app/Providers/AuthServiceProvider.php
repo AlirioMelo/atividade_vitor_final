@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace atividade_vitor_final\Providers;
 
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -13,7 +13,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        'atividade_vitor_final\Model' => 'atividade_vitor_final\Policies\ModelPolicy',
     ];
 
     /**

@@ -33,7 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "atividade_vitor_final\\": "app/"
         },
         "classmap": [
             "database/seeds",

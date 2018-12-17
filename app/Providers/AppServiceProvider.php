@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace atividade_vitor_final\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
