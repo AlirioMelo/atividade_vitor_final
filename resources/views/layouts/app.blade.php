@@ -19,9 +19,9 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body style="background: #ccc">
+<body style="background: #E0FFFF">
     <div id="app" >
-        <nav class="navbar navbar-expand-md navbar-dark navbar-laravel" style="background:black" >
+        <nav class="navbar navbar-expand-md navbar-dark navbar-laravel" style="background:black;" >
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Pagina do Usuario
@@ -30,20 +30,20 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <!-- Menu Usuario -->
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Opções
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item" href="{{ route('fotos') }}">Albums</a>
-                              <a class="dropdown-item" href="{{ route('albums') }}">Fotos</a>
-                            </div>
-                          </li>
-                    </ul>
+                <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown" >
+                <a class="nav-link dropdown-toggle" style="color: #E0FFFF " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Opções
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" >
+                <a class="dropdown-item" href="{{ route('fotos') }}" >Fotos</a>
+                <a class="dropdown-item" href="{{ route('albums') }}">Album</a>
+                </div>
+                </li>
+                </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -60,7 +60,7 @@
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a style="color: #E0FFFF " id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 

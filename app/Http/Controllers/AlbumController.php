@@ -23,7 +23,7 @@ class AlbumController extends Controller
     {
         $album = Album::paginate(25);
 
-        return view('album.inicio',["album"=>$album]);
+        return view('pagina_usuario.album.inicio',["album"=>$album]);
     }
 
     /**
@@ -34,7 +34,7 @@ class AlbumController extends Controller
     public function create()
     {
         $album = Album::all();
-        return view('album.formulario',["album"=>$album]);
+        return view('pagina_usuario.album.formulario',["album"=>$album]);
 
     }
 
@@ -77,7 +77,7 @@ class AlbumController extends Controller
     {
 
          $album = Album::where('id',$id)->first();
-         return view('album.editar',['album'=>$album]);
+         return view('pagina_usuario.album.editar',['album'=>$album]);
     }
 
     /**

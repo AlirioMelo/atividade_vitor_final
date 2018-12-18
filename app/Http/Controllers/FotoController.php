@@ -19,10 +19,9 @@ class FotoController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
-    {
-        $foto = Foto::select('fotos.*','album.*')->join('albums','fotos.album_id','=','albums.id')->paginate(25);
-        return view('foto.inicio',["foto"=>$foto]);
+    public function index(){
+        $foto = Foto::join('albums','fotos.album_id','=','albums.id')->select('fotos.*','album.*')->paginate(25);
+        return view('pagina_usuario.foto.inicio',["foto"=>$foto]);
     }
 
     /**
@@ -30,11 +29,10 @@ class FotoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         $foto = Foto::all();
         $album = Album::all();
-        return view('foto.formulario',["foto"=>$foto,'album'=>$album]);
+        return view('pagina_usuario.foto.formulario',["foto"=>$foto,'album'=>$album]);
 
     }
 
@@ -44,8 +42,7 @@ class FotoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $request->validate([
             'nome' => 'required|unique:fotos|max:255',
             'autor' => 'required|unique:fotos|max:255',
@@ -68,8 +65,7 @@ class FotoController extends Controller
      * @param  \App\Foto  $foto
      * @return \Illuminate\Http\Response
      */
-    public function show(Foto $foto)
-    {
+    public function show(Foto $foto){
         //
     }
 
@@ -79,13 +75,12 @@ class FotoController extends Controller
      * @param  \App\Foto  $foto
      * @return \Illuminate\Http\Response
      */
-    public function edit(Foto $foto,$id)
-    {
+    public function edit(Foto $foto,$id){
 
          $foto = Foto::where('id',$id)->first();
          $album = Album::all();
 
-         return view('foto.editar',['foto'=>$foto,'album'=>$album]);
+         return view('pagina_usuario.foto.editar',['foto'=>$foto,'album'=>$album]);
     }
 
     /**
@@ -95,22 +90,22 @@ class FotoController extends Controller
      * @param  \App\Foto  $foto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Foto $foto)
-    {
+    public function update(Request $request, Foto $foto){
         $request->validate([
             'nome' => 'required|unique:fotos|max:255',
             'autor' => 'required|unique:fotos|max:255',
             'imagem' => 'required|unique:fotos|max:255',
             'album_id' => 'required|unique:fotos|max:255',
         ]);
-        $foto = Foto::find($request->id);
-        $foto->nome = $request->nome;
-        $foto->autor = $request->autor;
-        $foto->imagem = $request->imagem;
-        $foto->album_id = $request->album_id;
-        $foto->update();
-        return redirect(route('fotos'))->with('mensagem', 'Atualizado');;
-    }
+
+            $foto = Foto::find($request->id);
+            $foto->nome = $request->nome;
+            $foto->autor = $request->autor;
+            $foto->imagem = $request->imagem;
+            $foto->album_id = $request->album_id;
+            $foto->update();
+            return redirect(route('fotos'))->with('mensagem', 'Atualizado');;
+        }
 
     /**
      * Remove the specified resource from storage.
@@ -118,8 +113,7 @@ class FotoController extends Controller
      * @param  \App\Foto  $foto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
-    {
+    public function destroy(Request $request){
         Foto::destroy($request->id_delete);
         return redirect(route('fotos'))->with('mensagem', 'Excluido');;
     }
