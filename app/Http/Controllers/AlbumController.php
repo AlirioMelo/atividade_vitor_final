@@ -53,7 +53,7 @@ class AlbumController extends Controller
         $album = new Album;
         $album->nome = $request->nome;
         $album->save();
-        return redirect(route('albums'))->with('mensagem', 'albums cadastrado!');;
+        return redirect(route('albums'))->with('mensagem', $request->nome.' Album adicionado');;
     }
 
     /**
@@ -87,15 +87,15 @@ class AlbumController extends Controller
      * @param  \App\Album  $album
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, albums $album)
+    public function update(Request $request, Album $album)
     {
         $request->validate([
-            'nome' => 'required|unique:albums|max:255',
+            'nome' => 'required|max:255',
         ]);
         $album = Album::find($request->id);
         $album->nome = $request->nome;
         $album->update();
-        return redirect(route('albums'))->with('mensagem', 'Atualizado!');;
+        return redirect(route('albums'))->with('mensagem', 'Atualizado.');;
     }
 
     /**
@@ -106,7 +106,8 @@ class AlbumController extends Controller
      */
     public function destroy(Request $request)
     {
-        Album::destroy($request->id_delete);
-        return redirect(route('albums'))->with('mensagem', 'Excluido');;
+        $album = Album::find($request->id_delete);
+        $album->delete();
+        return redirect(route('albums'))->with('mensagem', 'Excluido.');;
     }
 }

@@ -24,10 +24,30 @@
             <div class="col-lg-12">
                 <form role="form" method="POST" action="{{ route('atualizar_foto') }}">
                         @csrf
-                    <div class="form-group">
-                        <label for="ex">Nome</label>
-                        <input name="nome" id="nome" value="{{ $album->nome }}" class="form-control">
-                    </div>
+                        <input type="hidden" name="id" value="{{ $foto->id }}" class="form-control">
+                        <div class="form-group">
+                                <label for="ex">Nome</label>
+                                <input name="nome" id="nome" class="form-control" value="{{ $foto->nome }}">
+                                </div>
+                                <div class="form-group">
+                                <label for="ex">Usuario da Foto</label>
+                                <input type="hidden" name="autor"  class="form-control" value="{{ Auth::user()->name }}">
+                                <input  class="form-control" value="{{ Auth::user()->name }}" disabled>
+                                </div>
+                                <div class="form-group">
+                                <label for="ex">Album</label>
+                                <select  class="form-control"  name="album_id" required>
+
+                                <option value="" selected>...</option>
+                                @foreach ($album as $valor)
+                                   <option value="{{ $valor->id }}">{{ $valor->nome }}</option>
+                                @endforeach
+                                </select>
+                                </div>
+                                <div class="form-group">
+                                <label for="ex">Imagem</label>
+                                <img src="{{ url("storage/Fotos/{$foto->imagem}") }}" alt="">
+                                </div>
                       <center> <button type="submit" class="btn btn-primary">Atualizar</button>
                       </center>
                 </form>

@@ -24,9 +24,10 @@
             <div class="col-lg-12">
                 <form role="form" method="POST" action="{{ route('atualizar_album') }}">
                         @csrf
+                        <input type="hidden" name="id" value="{{ $album->id }}" class="form-control">
                     <div class="form-group">
                         <label for="ex">Nome</label>
-                        <input name="nome" id="nome" value="{{ $album->nome }}" class="form-control">
+                        <input name="nome"  value="{{ $album->nome }}" class="form-control">
                     </div>
                       <center> <button type="submit" class="btn btn-primary">Atualizar</button>
                       </center>

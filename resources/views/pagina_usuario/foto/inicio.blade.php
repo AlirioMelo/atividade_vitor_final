@@ -34,13 +34,13 @@
                         <td>{{ $valor->nome }}</td>
                         <td>{{ $valor->autor }}</td>
                         <td>{{ $valor->album_nome }}</td>
-                        <td>{{ $valor->nome }}</td>
+                        <td>  <img src="{{ url("storage/Fotos/{$valor->imagem}") }}" alt="" width="100px" height="100px"></td>
                         <td>
-    <a href="{{ url('/foto/formulario_atualizar/'.$valor->id)}}" class="btn btn-primary">Editar</a>
+    <a href="{{ url('/fotos/formulario_atualizar/'.$valor->foto_id)}}" class="btn btn-primary">Editar</a>
 
     <form action="{{ route('apagar_foto') }}" method="post" style="display:inline-block">
             @csrf
-            <input type="hidden" name="id_delete" value="{{ $valor->id }}">
+            <input type="hidden" name="id_delete" value="{{ $valor->foto_id }}">
             <button  class="btn btn-primary" >Excluir</button>
     </form>
                         </a>

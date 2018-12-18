@@ -2,10 +2,10 @@
 
 namespace atividade_vitor_final\Http\Controllers;
 
+use File;
 use atividade_vitor_final\Foto;
 use atividade_vitor_final\Album;
 use Illuminate\Http\Request;
-
 class FotoController extends Controller
 {
     public function __construct()
@@ -20,7 +20,7 @@ class FotoController extends Controller
      */
 
     public function index(){
-        $foto = Foto::join('albums','fotos.album_id','=','albums.id')->select('fotos.*','albums.*','albums.nome as album_nome')->paginate(25);
+        $foto = Foto::join('albums','fotos.album_id','=','albums.id')->select('fotos.*','fotos.id as foto_id','albums.*','albums.nome as album_nome')->paginate(25);
         return view('pagina_usuario.foto.inicio',["foto"=>$foto]);
     }
 
@@ -44,19 +44,33 @@ class FotoController extends Controller
      */
     public function store(Request $request){
         $request->validate([
-            'nome' => 'required|unique:fotos|max:255',
-            'autor' => 'required|unique:fotos|max:255',
-            'imagem' => 'required|unique:fotos|max:255',
-            'album_id' => 'required|unique:albums|max:255',
+            'nome' => 'required|max:255',
+            'autor' => 'required|max:255',
+            'imagem' => 'required',
+            'album_id' => 'required|max:255',
         ]);
 
         $foto = new Foto;
-        $foto->nome = $request->nome;
+
+        if ($request->hasFile('imagem') && $request->file('imagem')->isValid()) {
+            $nome = uniqid(date('HisYmd'));
+            $extension = $request->imagem->extension();
+            $nome_imagem = "{$nome}.{$extension}";
+            $enviar = $request->imagem->storeAs('public/Fotos',$nome_imagem);
+            if ( $enviar ){
+
+
+            }else{
+                return 'Não foi possivel enviar a imagem';
+            }
+
+        }
         $foto->autor = $request->autor;
-        $foto->imagem = $request->imagem;
+        $foto->nome = $request->nome;
+        $foto->imagem = $nome_imagem;
         $foto->album_id = $request->album_id;
         $foto->save();
-        return redirect(route('fotos'))->with('mensagem', 'Foto cadastrada!');;
+        return redirect(route('fotos'))->with('mensagem', 'Foto Inserida');;
     }
 
     /**
@@ -92,19 +106,17 @@ class FotoController extends Controller
      */
     public function update(Request $request, Foto $foto){
         $request->validate([
-            'nome' => 'required|unique:fotos|max:255',
-            'autor' => 'required|unique:fotos|max:255',
-            'imagem' => 'required|unique:fotos|max:255',
-            'album_id' => 'required|unique:fotos|max:255',
+            'nome' => 'required||max:255',
+            'autor' => 'required||max:255',
+            'album_id' => 'required||max:255',
         ]);
 
             $foto = Foto::find($request->id);
             $foto->nome = $request->nome;
             $foto->autor = $request->autor;
-            $foto->imagem = $request->imagem;
             $foto->album_id = $request->album_id;
             $foto->update();
-            return redirect(route('fotos'))->with('mensagem', 'Atualizado');;
+            return redirect(route('fotos'))->with('mensagem', 'Atualizado.');;
         }
 
     /**
@@ -114,7 +126,8 @@ class FotoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request){
-        Foto::destroy($request->id_delete);
-        return redirect(route('fotos'))->with('mensagem', 'Excluido');;
+        $foto = Foto::find($request->id_delete);
+        $foto->delete();
+        return redirect(route('fotos'))->with('mensagem', 'Excluido.');;
     }
 }
