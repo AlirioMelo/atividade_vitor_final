@@ -3,6 +3,7 @@
 namespace atividade_vitor_final\Http\Controllers;
 
 use atividade_vitor_final\Foto;
+use atividade_vitor_final\Album;
 use Illuminate\Http\Request;
 
 class FotoController extends Controller
@@ -31,6 +32,9 @@ class FotoController extends Controller
      */
     public function create()
     {
+        $foto = Foto::all();
+        $album = Album::all();
+        return view('foto.formulario',["foto"=>$foto,'album'=>$album]);
 
     }
 
@@ -42,7 +46,20 @@ class FotoController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'nome' => 'required|unique:fotos|max:255',
+            'autor' => 'required|unique:fotos|max:255',
+            'imagem' => 'required|unique:fotos|max:255',
+            'album_id' => 'required|unique:fotos|max:255',
+        ]);
 
+        $foto = new Foto;
+        $foto->nome = $request->nome;
+        $foto->autor = $request->autor;
+        $foto->imagem = $request->imagem;
+        $foto->album_id = $request->album_id;
+        $foto->save();
+        return redirect(route('fotos'))->with('mensagem', 'Foto cadastrada!');;
     }
 
     /**
@@ -65,6 +82,10 @@ class FotoController extends Controller
     public function edit(Foto $foto,$id)
     {
 
+         $foto = Foto::where('id',$id)->first();
+         $album = Album::all();
+
+         return view('foto.editar',['foto'=>$foto,'album'=>$album]);
     }
 
     /**
@@ -76,6 +97,19 @@ class FotoController extends Controller
      */
     public function update(Request $request, Foto $foto)
     {
+        $request->validate([
+            'nome' => 'required|unique:fotos|max:255',
+            'autor' => 'required|unique:fotos|max:255',
+            'imagem' => 'required|unique:fotos|max:255',
+            'album_id' => 'required|unique:fotos|max:255',
+        ]);
+        $foto = Foto::find($request->id);
+        $foto->nome = $request->nome;
+        $foto->autor = $request->autor;
+        $foto->imagem = $request->imagem;
+        $foto->album_id = $request->album_id;
+        $foto->update();
+        return redirect(route('fotos'))->with('mensagem', 'Atualizado');;
     }
 
     /**
@@ -86,5 +120,7 @@ class FotoController extends Controller
      */
     public function destroy(Request $request)
     {
+        Foto::destroy($request->id_delete);
+        return redirect(route('fotos'))->with('mensagem', 'Excluido');;
     }
 }
