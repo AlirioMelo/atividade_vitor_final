@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class FotoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +20,8 @@ class FotoController extends Controller
 
     public function index()
     {
+        $foto = Foto::select('fotos.*','album.*')->join('albums','fotos.album_id','=','albums.id')->paginate(25);
+        return view('foto.inicio',["foto"=>$foto]);
     }
 
     /**
