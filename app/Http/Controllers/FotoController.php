@@ -20,7 +20,7 @@ class FotoController extends Controller
      */
 
     public function index(){
-        $foto = Foto::join('albums','fotos.album_id','=','albums.id')->select('fotos.*','albums.*')->paginate(25);
+        $foto = Foto::join('albums','fotos.album_id','=','albums.id')->select('fotos.*','albums.*','albums.nome as album_nome')->paginate(25);
         return view('pagina_usuario.foto.inicio',["foto"=>$foto]);
     }
 

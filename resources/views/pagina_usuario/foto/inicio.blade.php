@@ -20,7 +20,10 @@
                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>Nome do Album</th>
+                                        <th>Nome da Foto</th>
+                                        <th>Autor</th>
+                                        <th>Album</th>
+                                        <th>Imagem</th>
                                         <th>Editar/Excluir</th>
                                     </tr>
                                 </thead>
@@ -28,6 +31,9 @@
 
                         @foreach ($foto as $valor)
                         <tr>
+                        <td>{{ $valor->nome }}</td>
+                        <td>{{ $valor->autor }}</td>
+                        <td>{{ $valor->album_nome }}</td>
                         <td>{{ $valor->nome }}</td>
                         <td>
     <a href="{{ url('/foto/formulario_atualizar/'.$valor->id)}}" class="btn btn-primary">Editar</a>
